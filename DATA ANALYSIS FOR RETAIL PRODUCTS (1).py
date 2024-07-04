@@ -13,27 +13,43 @@
 ### Step 1: Loading the Data
 
 import pandas as pd
-
-
-# In[2]:
-
-
-data = pd.read_csv("Online Sales Data.csv")
+import streamlit as st
+st.title("Hello world!")  # add a title
 
 
 # In[3]:
 
 
-data
+import pandas as pd
+import streamlit as st
+
+st.title("Hello world!")
+
+uploaded_file = st.file_uploader("Choose a file")
+if uploaded_file is not None:
+  data = pd.read_csv(uploaded_file)
+  st.write(dataframe)
+
+
+# In[ ]:
+
+
+
 
 
 # In[4]:
 
 
+data
+
+
+# In[ ]:
+
+
 data.head()
 
 
-# In[5]:
+# In[ ]:
 
 
 ### Step 2: Data Cleaning
@@ -42,7 +58,7 @@ missing_values = data.isnull().sum()
 print(missing_values)
 
 
-# In[6]:
+# In[ ]:
 
 
 # Drop rows with missing values or fill them with appropriate values
@@ -50,13 +66,13 @@ print(missing_values)
 data = data.dropna()  # or data.fillna(method='ffill') for forward filling
 
 
-# In[7]:
+# In[ ]:
 
 
 data.duplicated().sum()
 
 
-# In[8]:
+# In[ ]:
 
 
 # Convert 'Date' column to datetime type
@@ -64,7 +80,7 @@ data.duplicated().sum()
 data['Date'] = pd.to_datetime(data['Date'])
 
 
-# In[9]:
+# In[ ]:
 
 
 # Display cleaned data
@@ -72,19 +88,19 @@ data['Date'] = pd.to_datetime(data['Date'])
 data
 
 
-# In[10]:
+# In[ ]:
 
 
 data.columns
 
 
-# In[11]:
+# In[ ]:
 
 
 ### Step 3: Exploratory Data Analysis (EDA)
 
 
-# In[12]:
+# In[ ]:
 
 
 # Summary statistics
@@ -93,7 +109,7 @@ summary_stats = data.describe()
 print(summary_stats)
 
 
-# In[13]:
+# In[ ]:
 
 
 # Group by Category and calculate total sales
@@ -102,7 +118,7 @@ category_sales = data.groupby('Product Category').agg({'Units Sold': 'sum', 'Uni
 print(category_sales)
 
 
-# In[14]:
+# In[ ]:
 
 
 # Calculate total revenue
@@ -112,7 +128,7 @@ total_revenue = data['Revenue'].sum()
 print(f"Total Revenue: ${total_revenue}")
 
 
-# In[15]:
+# In[ ]:
 
 
 # Monthly sales trend
@@ -121,13 +137,13 @@ monthly_sales = data.set_index('Date').resample('M').agg({'Units Sold': 'sum', '
 print(monthly_sales)
 
 
-# In[16]:
+# In[ ]:
 
 
 ### Step 4: Statistical Analysis
 
 
-# In[17]:
+# In[ ]:
 
 
 # Correlation between Price and Quantity Sold
@@ -136,7 +152,7 @@ correlation = data['Unit Price'].corr(data['Units Sold'])
 print(f"Correlation between Price and Units Sold: {correlation}")
 
 
-# In[18]:
+# In[ ]:
 
 
 # Average revenue per product category
@@ -145,20 +161,20 @@ avg_revenue_per_category = data.groupby('Product Category')['Revenue'].mean()
 print(avg_revenue_per_category)
 
 
-# In[19]:
+# In[ ]:
 
 
 ### Step 5: Visualization
 
 
-# In[20]:
+# In[ ]:
 
 
 import matplotlib.pyplot as plt
 import seaborn as sns
 
 
-# In[21]:
+# In[ ]:
 
 
 # Sales by category
@@ -169,7 +185,7 @@ plt.title('Sales by Category')
 plt.show()
 
 
-# In[22]:
+# In[ ]:
 
 
 # Monthly sales trend
@@ -180,7 +196,7 @@ plt.title('Monthly Sales Trend')
 plt.show()
 
 
-# In[23]:
+# In[ ]:
 
 
 # Revenue distribution
@@ -191,19 +207,19 @@ plt.title('Revenue Distribution')
 plt.show()
 
 
-# In[60]:
+# In[ ]:
 
 
 ### Step 6: Predictive Modeling 
 
 
-# In[46]:
+# In[ ]:
 
 
 from statsmodels.tsa.holtwinters import ExponentialSmoothing
 
 
-# In[56]:
+# In[ ]:
 
 
 # Fit the model
@@ -212,7 +228,7 @@ model = ExponentialSmoothing(monthly_sales['Units Sold'],trend='add', seasonal_p
 fit = model.fit()
 
 
-# In[57]:
+# In[ ]:
 
 
 # Forecast the next 12 months
@@ -221,7 +237,7 @@ forecast = fit.forecast(12)
 print(forecast)
 
 
-# In[63]:
+# In[ ]:
 
 
 # Plot the forecast
